@@ -73,7 +73,7 @@ export class HillpostService {
             const { data: result } = await firstValueFrom(response$);
             return result;
         } catch (error) {
-            return error?.response?.data ?? { error: 'Request failed', };
+            return error?.response?.data ?? { error: 'Request failed' };
         }
 
     }
