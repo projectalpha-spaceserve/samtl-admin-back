@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      IMAGE_NAME: spaceserve/mis-frontend
+      IMAGE_NAME: spaceserve/samtl-admin-back
 
     steps:
       - name: Checkout code

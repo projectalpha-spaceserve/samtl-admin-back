@@ -20,7 +20,7 @@ services:
     env_file:
       - .env
     environment:
-      DATABASE_URL: postgres://postgres:KyZryoIUg6i2009czentq2%23@192.168.0.24:5432/mis_db
+      DATABASE_URL: postgres://postgres:KyZryoIUg6i2009czentq2%23@10.10.0.24:5432/samtl_admin
     command: sh -c "yarn prisma migrate deploy && yarn start:prod"
 
   nginx:
