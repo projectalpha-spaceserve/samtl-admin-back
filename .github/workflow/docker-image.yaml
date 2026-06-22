@@ -1,0 +1,39 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: spaceserve/mis-frontend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get latest tag from Docker Hub
+        id: get_tag
+        run: |
+          latest=$(curl -s "https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags?page_size=1&page=1&ordering=last_updated" | jq -r '.results[0].name')
+          echo "Latest tag: $latest"
+
+          IFS='.' read -r major minor patch <<< "$latest"
+          next_patch=$((patch + 1))
+          next_tag="${major}.${minor}.${next_patch}"
+          echo "NEXT_TAG=$next_tag" >> $GITHUB_ENV
+          echo "Tag to use: $next_tag"
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build Docker image
+        run: docker build --no-cache -t $IMAGE_NAME:$NEXT_TAG -t $IMAGE_NAME:latest .
+
+      - name: Push Docker image
+        run: |
+          docker push $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:$NEXT_TAG
