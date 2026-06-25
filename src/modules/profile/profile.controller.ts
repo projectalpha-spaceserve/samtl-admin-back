@@ -28,8 +28,8 @@ export class ProfileController {
     schema: {
       type: 'object',
       properties: {
-        firstname: { type: 'string' },
-        lastname: { type: 'string' },
+        firstName: { type: 'string' },
+        lastName: { type: 'string' },
         phone: { type: 'string' },
       },
     },
