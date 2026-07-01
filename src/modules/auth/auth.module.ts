@@ -6,11 +6,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from '../../common/strategies/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { AppMailerModule } from 'src/common/mailer/mailer.module';
 
 @Module({
     imports: [
         PrismaModule,
         PassportModule,
+        AppMailerModule,
         JwtModule.registerAsync({
             imports: [ConfigModule],
             useFactory: async (configService: ConfigService) => ({

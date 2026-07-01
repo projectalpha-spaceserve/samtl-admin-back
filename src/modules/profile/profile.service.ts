@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../common/prisma/prisma.service';
+import { PrismaService } from 'src/common/prisma/prisma.service';
 
 @Injectable()
 export class ProfileService {
@@ -10,8 +10,8 @@ export class ProfileService {
             where: { id: user.user_id },
             select: {
                 id: true,
-                firstname: true,
-                lastname: true,
+                firstName: true,
+                lastName: true,
                 email: true,
                 phone: true,
                 created_at: true,
@@ -23,8 +23,8 @@ export class ProfileService {
         return await this.prisma.admin.update({
             where: { id: user.user_id },
             data: {
-                firstname: data.firstname,
-                lastname: data.lastname,
+                firstName: data.firstName,
+                lastName: data.lastName,
                 phone: data.phone,
             },
         });
